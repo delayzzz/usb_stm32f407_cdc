@@ -1,4 +1,4 @@
-# Install script for directory: /home/zyc/zyc/c_cpp/usb/test1
+# Install script for directory: /home/zyc/zyc/gitorgitee/delayzzz@github/usb_stm32f407_cdc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zyc/zyc/c_cpp/usb/test1/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/zyc/zyc/gitorgitee/delayzzz@github/usb_stm32f407_cdc/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/zyc/zyc/c_cpp/usb/test1/test1.cpp" "/home/zyc/zyc/c_cpp/usb/test1/build/CMakeFiles/test1.dir/test1.cpp.o"
+  "/home/zyc/zyc/gitorgitee/delayzzz@github/usb_stm32f407_cdc/test1.cpp" "/home/zyc/zyc/gitorgitee/delayzzz@github/usb_stm32f407_cdc/build/CMakeFiles/test1.dir/test1.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

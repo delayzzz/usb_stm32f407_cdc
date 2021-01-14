@@ -8,6 +8,8 @@
 #define EPIN_ADDR 0X81
 #define EPOUT_ADDR 0X01
 
+#define FLOAT_NUM 10
+
 libusb_device_handle *handle_stm32f4 = NULL;
 clock_t start,end;
 
@@ -18,9 +20,9 @@ int main()
     libusb_device **devs;
     int r, ret, tx;
     
-    unsigned char buf[100];
+    unsigned char buf[4*FLOAT_NUM+1];
     uint16_t count = 0;
-    unsigned char Txbuf[] = "linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!";
+    uint8_t Txbuf[4*FLOAT_NUM] = {0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78};
 
     std::cout << "libusb at the start..\n"
               << std::endl;
@@ -51,16 +53,16 @@ int main()
         count ++;
         
         tx = libusb_bulk_transfer(handle_stm32f4, EPOUT_ADDR, Txbuf,
-                                    strlen("linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!linux test!"),
+                                    4*FLOAT_NUM,
                                     NULL, 1000);
 
-        if(count >= 2000)
+        if(count >= 5000)
         {
             end = clock();
 	        double endtime=(double)(end-start)/(double)CLOCKS_PER_SEC;
             std::cout << "Interval time:" << endtime << "s" << std::endl;
 
-            r = libusb_bulk_transfer(handle_stm32f4, EPIN_ADDR, buf, 1, NULL, 2000);
+            r = libusb_bulk_transfer(handle_stm32f4, EPIN_ADDR, buf, 40, NULL, 2000);
             if (r < 0)
             {
                 std::cout << "\n"
@@ -68,8 +70,13 @@ int main()
             }
             else
             {
-                std::cout << "receive:" << (unsigned)buf[0] << "*10kb bytes" << "\n"
-                        << std::endl;
+                // std::cout << "receive:" << (unsigned)buf[0] << "*10kb bytes" << "\n"
+                //         << std::endl;
+                for(int i=0;i<4*FLOAT_NUM;i++)
+                {
+                    std::cout << (unsigned)buf[i] << std::endl;
+                }
+                std::cout << '/n' << std::endl;
             }
             count = 0;
             rx_cnt ++;
