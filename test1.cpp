@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string.h> 
+#include <string.h>
 #include <time.h>
 #include "libusb-1.0/libusb.h"
 
@@ -11,7 +11,7 @@
 #define FLOAT_NUM 10
 
 libusb_device_handle *handle_stm32f4 = NULL;
-clock_t start,end;
+clock_t start, end;
 
 int rx_cnt = 0;
 
@@ -19,10 +19,10 @@ int main()
 {
     libusb_device **devs;
     int r, ret, tx;
-    
-    unsigned char buf[4*FLOAT_NUM+1];
+
+    unsigned char buf[4 * FLOAT_NUM + 1];
     uint16_t count = 0;
-    uint8_t Txbuf[4*FLOAT_NUM] = {0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78,0x12,0x34,0x56,0x78};
+    uint8_t Txbuf[4 * FLOAT_NUM] = {0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78, 0x12, 0x34, 0x56, 0x78};
 
     std::cout << "libusb at the start..\n"
               << std::endl;
@@ -48,39 +48,39 @@ int main()
                   << std::endl;
     }
 
-    while (rx_cnt<10)
+    while (rx_cnt < 10)
     {
-        count ++;
-        
-        tx = libusb_bulk_transfer(handle_stm32f4, EPOUT_ADDR, Txbuf,
-                                    4*FLOAT_NUM,
-                                    NULL, 1000);
+        count++;
 
-        if(count >= 5000)
+        tx = libusb_bulk_transfer(handle_stm32f4, EPOUT_ADDR, Txbuf,
+                                  4 * FLOAT_NUM,
+                                  NULL, 1000);
+
+        if (count >= 5000)
         {
             end = clock();
-	        double endtime=(double)(end-start)/(double)CLOCKS_PER_SEC;
+            double endtime = (double)(end - start) / (double)CLOCKS_PER_SEC;
             std::cout << "Interval time:" << endtime << "s" << std::endl;
 
-            r = libusb_bulk_transfer(handle_stm32f4, EPIN_ADDR, buf, 40, NULL, 2000);
+            r = libusb_bulk_transfer(handle_stm32f4, EPIN_ADDR, buf, 4 * FLOAT_NUM, NULL, 2000);
             if (r < 0)
             {
                 std::cout << "\n"
-                        << libusb_error_name(r) << std::endl;
+                          << libusb_error_name(r) << std::endl;
             }
             else
             {
                 // std::cout << "receive:" << (unsigned)buf[0] << "*10kb bytes" << "\n"
                 //         << std::endl;
-                for(int i=0;i<4*FLOAT_NUM;i++)
+                for (int i = 0; i < 4 * FLOAT_NUM; i++)
                 {
                     std::cout << (unsigned)buf[i] << std::endl;
                 }
                 std::cout << '/n' << std::endl;
             }
             count = 0;
-            rx_cnt ++;
-            
+            rx_cnt++;
+
             start = clock();
         }
     }
