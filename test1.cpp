@@ -58,7 +58,7 @@ int main()
         {
             end = clock();
 	        double endtime=(double)(end-start)/(double)CLOCKS_PER_SEC;
-            std::cout << "Total time:" << endtime << "s" << std::endl;
+            std::cout << "Interval time:" << endtime << "s" << std::endl;
 
             r = libusb_bulk_transfer(handle_stm32f4, EPIN_ADDR, buf, 1, NULL, 2000);
             if (r < 0)
