@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/zyc/zyc/c_cpp/usb/test1/test1.cpp
+iostream
+-
+string.h
+-
+time.h
+-
+libusb-1.0/libusb.h
+/home/zyc/zyc/c_cpp/usb/test1/libusb-1.0/libusb.h
+
